@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Julequiz</title>
+
+<style>
+:root {
+  --bg1: #1e2d24;
+  --bg2: #2f4f3f;
+  --accent: #f5d67b;
+  --door-bg: #7a0f1b;
+  --door-bg-locked: #a64b5f;
+  --text: var(--door-bg);
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: var(--text);
+  text-align: center;
+  padding: 35px;
+  font-size: 1.6rem;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h1 {
+  font-family: 'Mountains of Christmas', cursive;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 2px 2px #000;
+}
+
+.category {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 18px auto;
+  max-width: 900px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+
+.category h2 {
+  font-family: 'Snowburst One', cursive;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--accent);
+}
+
+.question-box, .result-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 22px;
+  max-width: 600px;
+  width: 90%;
+  padding: 30px;
+  font-size: 1.9rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  color: var(--door-bg);
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.question-img {
+  max-width: 90%;
+  max-height: 450px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.answer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.sip-btn {
+  background: var(--door-bg);
+  border: none;
+  padding: 18px 28px;
+  font-size: 1.6rem;
+  border-radius: 15px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.sip-btn:hover {
+  transform: scale(1.1);
+  background: #a52a2a;
+}
+
+.sip-btn.taken {
+  text-decoration: line-through;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10px;
+  color: #fff;
+  font-size: 1.2rem;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0.7; }
+}
+</style>
+</head>
+
+<body>
+  <h1>Jentenes julequiz 🎄🥂🎅🏼 </h1>
+
+  <div id="selectScreen">
+    <div class="category">
+      <h2>🎁 Hvor er dette?</h2>
+      <div class="sips-select">
+        <button class="sip-btn" onclick="startGame(1,1,this)">1</button>
+        <button class="sip-btn" onclick="startGame(1,2,this)">2</button>
+        <button class="sip-btn" onclick="startGame(1,3,this)">3</button>
+        <button class="sip-btn" onclick="startGame(1,4,this)">4</button>
+        <button class="sip-btn" onclick="startGame(1,5,this)">5</button>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>🎅🏼 Hvem er dette?</h2>
+      <div class="sips-select">
+        <button class="sip-btn" onclick="startGame(2,1,this)">1</button>
+        <button class="sip-btn" onclick="startGame(2,2,this)">2</button>
+        <button class="sip-btn" onclick="startGame(2,3,this)">3</button>
+        <button class="sip-btn" onclick="startGame(2,4,this)">4</button>
+        <button class="sip-btn" onclick="startGame(2,5,this)">5</button>
+      </div>
+    </div>
+
+    <div class="category">
+      <h2>🎄 Hva er dette?</h2>
+      <div class="sips-select">
+        <button class="sip-btn" onclick="startGame(3,1,this)">1</button>
+        <button class="sip-btn" onclick="startGame(3,2,this)">2</button>
+        <button class="sip-btn" onclick="startGame(3,3,this)">3</button>
+        <button class="sip-btn" onclick="startGame(3,4,this)">4</button>
+        <button class="sip-btn" onclick="startGame(3,5,this)">5</button>
+      </div>
+    </div>
+  </div>
+
+<div id="questionScreen" class="hidden question-box">
+  <h2 id="questionText"></h2>
+
+  <img id="questionImage" class="question-img hidden" />
+  <p id="questionTextSnippet" class="hidden" style="font-size:1.7rem;"></p>
+
+  <div class="answer-buttons">
+    <button onclick="showAnswer()" class="sip-btn">🎁 Vis svar</button>
+    <button onclick="goBack()" class="sip-btn" style="background:#8c8989;">🔙 Tilbake</button>
+  </div>
+</div>
+
+<div id="resultScreen" class="hidden result-box">
+  <h2 id="resultText"></h2>
+  <button onclick="resetGame()" class="sip-btn">⏭ Neste spørsmål</button>
+</div>
+
+<script>
+  let questions = {};
+  let currentCategory = 1;
+  let currentDifficulty = 1;
+  let currentQuestion = null;
+  let selectedButton = null;
+  let questionsLoaded = false;
+
+  fetch("questions.json")
+    .then(r => r.json())
+    .then(data => {
+      questions = data;
+      questionsLoaded = true;
+    });
+
+  function startGame(category, difficulty, buttonEl) {
+    if (!questionsLoaded) {
+      alert("Questions are still loading, please wait!");
+      return;
+    }
+
+    currentCategory = category;
+    currentDifficulty = difficulty;
+    selectedButton = buttonEl;
+
+    document.getElementById("selectScreen").classList.add("hidden");
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const pool = questions[currentCategory]?.[currentDifficulty];
+    if (!pool || pool.length === 0) {
+      alert("Ingen spørsmål igjen i denne kategorien!");
+      resetGame();
+      return;
+    }
+
+    const idx = Math.floor(Math.random() * pool.length);
+    currentQuestion = pool.splice(idx, 1)[0];
+
+    document.getElementById("questionText").textContent = currentQuestion.question;
+
+    const img = document.getElementById("questionImage");
+    const textSnippet = document.getElementById("questionTextSnippet");
+
+    if (currentQuestion.image) {
+      img.src = currentQuestion.image;
+      img.classList.remove("hidden");
+      textSnippet.classList.add("hidden");
+    } else if (currentQuestion.textSnippet) {
+      textSnippet.textContent = currentQuestion.textSnippet;
+      textSnippet.classList.remove("hidden");
+      img.classList.add("hidden");
+    } else {
+      img.classList.add("hidden");
+      textSnippet.classList.add("hidden");
+    }
+
+    document.getElementById("questionScreen").classList.remove("hidden");
+  }
+
+  function showAnswer() {
+    // NOW we cross out the button
+    if (selectedButton) {
+      selectedButton.classList.add("taken");
+    }
+
+    document.getElementById("questionScreen").classList.add("hidden");
+    document.getElementById("resultText").textContent = currentQuestion.answer;
+    document.getElementById("resultScreen").classList.remove("hidden");
+  }
+
+  function resetGame() {
+    document.getElementById("resultScreen").classList.add("hidden");
+    document.getElementById("selectScreen").classList.remove("hidden");
+  }
+
+  function goBack() {
+    document.getElementById("questionScreen").classList.add("hidden");
+    document.getElementById("selectScreen").classList.remove("hidden");
+  }
+
+  function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄️';
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+    document.body.appendChild(snowflake);
+
+    setTimeout(() => snowflake.remove(), 5000);
+  }
+
+  setInterval(createSnowflake, 200);
+</script>
+</body>
+</html>

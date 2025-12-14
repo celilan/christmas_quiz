@@ -1,0 +1,54 @@
+{
+  "1": {
+    "1": [
+      { "question": "Hvor er dette?", "answer": "Dalsnuten", "image": "images/dalsnuten.jpg" }
+    ],
+    "2": [
+      { "question": "Hvor er dette?", "answer": "Nordkapp", "image": "images/nordkapp.jpg" }
+    ],
+    "3": [
+      { "question": "Hvor er dette?", "answer": "Madame Aase", "image": "images/aase.jpg" }
+    ],
+    "4": [
+      { "question": "Hvor er dette?", "answer": "Scotsman", "image": "images/scotsman.jpg" }
+    ],
+    "5": [
+      { "question": "Hvor er dette?", "answer": "Grønland", "image": "images/gronland.jpg" }
+    ]
+  },
+  "2": {
+  "1": [
+    { "question": "Hvem er dette?", "image": "images/depp.jpg", "answer": "Johnny Depp" }
+  ],
+  "2": [
+    { "question": "Hvem er dette?", "image": "images/nusa.jpeg", "answer": "Antonio Nusa" }
+  ],
+  "3": [
+    { "question": "Hvem er dette?", "image": "images/hareide.jpg", "answer": "Knut Arild Hareide" }
+  ],
+  "4": [
+    { "question": "Hvem er dette?", "image": "images/megleren_artist.jpg", "answer": "Jossi (artist på Megleren)" }
+  ],
+  "5": [
+    { "question": "Hvem er dette?", "image": "images/bill.jpg", "answer": "Bill Gates" }
+  ]
+},
+  "3": {
+    "1": [
+      { "question": "Hva er dette?", "answer": "2020", "image": "images/covid.jpg" }
+    ],
+    "2": [
+      { "question": "Hva er dette?","answer": "1998", "image": "images/brasil.jpg" }
+    ],
+    "3": [
+      { "question": "Hva er dette?", "answer": "2017", "image": "images/forus.jpg" }
+    ],
+    "4": [
+      { "question": "Hva er dette?", "answer": "Alexander Kielland monumentet", "image": "images/kielland.jpg" }
+    ],
+    "5": [
+      { "question": "Hva er dette?", "answer": "1912", "image": "images/skapelsen.png" }
+    ]
+    
+  }
+}
